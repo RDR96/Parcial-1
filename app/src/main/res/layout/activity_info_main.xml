@@ -6,7 +6,6 @@
     android:padding="5dp"
     android:background="@color/backgroundFragment"
     >
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -23,7 +22,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:weightSum="2"
+        android:weightSum="3"
         android:layout_marginTop="5dp"
         >
 
@@ -52,6 +51,19 @@
                 />
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            >
+            <ImageView
+                android:id="@+id/shareIntent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_share__white"
+                />
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -63,7 +75,7 @@
         
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="@string/name"
             android:textSize="30sp"
             android:textColor="#ffffff"
@@ -72,17 +84,19 @@
         
         <EditText
             android:id="@+id/nameText"
+            android:maxLength="15"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textColor="#ffffff"
+            android:textAlignment="center"
             android:enabled="false"
-            android:focusable="false"
             />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:text="@string/number"
             android:textSize="30sp"
             android:textColor="#ffffff"
@@ -90,14 +104,14 @@
             />
 
         <EditText
-            android:id="@+id/numeberText"
+            android:id="@+id/numberText"
+            android:digits="0123456789"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textColor="#ffffff"
             android:textAlignment="center"
             android:enabled="false"
-            android:focusable="false"
             />
 
         <LinearLayout
@@ -107,6 +121,7 @@
             >
 
             <ImageView
+                android:id="@+id/editButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/ic_edit"

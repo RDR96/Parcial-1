@@ -19,6 +19,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -41,6 +44,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        final MyViewHolder vwHolder = new MyViewHolder(v);
         final LinearLayout callingButton = v.findViewById(R.id.callAction);
         final LinearLayout favoriteButton = v.findViewById(R.id.favoriteAction);
+        final LinearLayout container = v.findViewById(R.id.element);
+
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context,"Nombre: " + MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getName(),Toast.LENGTH_SHORT).show();
+                Intent newIntent = new Intent(context.getApplicationContext(), contactInfoActivity.class);
+                newIntent.setAction(Intent.ACTION_SEND);
+                newIntent.setType("text/plain");
+                newIntent.putExtra(Intent.EXTRA_TEXT, MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getName()
+                + "'" + MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getNumber() + "'" + MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getOriginalPosition());
+                context.startActivity(newIntent);
+            }
+        });
 
         callingButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,6 +73,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                 }
             }
         });
+
+
 
         favoriteButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,6 +154,4 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     }
-
-
 }

@@ -61,7 +61,6 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
             public void onClick(View view) {
                 //FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber());
                 //favoriteButton.setImageResource(R.drawable.ic_favorite_red);
-
                 FragmentFavorite.removeItem(vwHolder.getAdapterPosition(),context);
             }
         });

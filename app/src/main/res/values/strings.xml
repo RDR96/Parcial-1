@@ -2,4 +2,5 @@
     <string name="app_name">Parcial1</string>
     <string name="name">Nombre</string>
     <string name="number">Numero</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

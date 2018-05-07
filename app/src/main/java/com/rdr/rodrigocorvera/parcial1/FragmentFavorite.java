@@ -50,10 +50,6 @@ public class FragmentFavorite extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        /*if (MainActivity.lstContact  == null) {
-            MainActivity.lstContact = new ArrayList<>();
-        }*/
     }
     protected void displayReceivedData(String name,String number, int option)
     {
@@ -67,34 +63,6 @@ public class FragmentFavorite extends Fragment {
         RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(recyclerViewAdapter);
-
-            /*if(MainActivity.lstContact.size() == 0){
-                Toast.makeText(getContext(),
-                        "Se agrego", Toast.LENGTH_SHORT).show();
-                MainActivity.lstContact.add(new Contact(name,number, true));
-                RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), MainActivity.lstContact);
-                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                rv.setAdapter(recyclerViewAdapter);
-
-            } else{
-                for (Contact Element : MainActivity.lstContact) {
-
-                    if(Element.getNumber() != number) {
-                        MainActivity.lstContact.add(new Contact(name,number, true));
-                        RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), MainActivity.lstContact);
-                        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rv.setAdapter(recyclerViewAdapter);
-                    }else {
-                        MainActivity.lstContact.remove(MainActivity.lstContact.indexOf(Element));
-                        RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), MainActivity.lstContact);
-                        rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rv.setAdapter(recyclerViewAdapter);
-                    }
-                }
-            }*/
-
-
-
 
      }
 

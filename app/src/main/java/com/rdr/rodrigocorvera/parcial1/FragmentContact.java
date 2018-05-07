@@ -58,19 +58,28 @@ public class FragmentContact extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        MainActivity.lstContact = new ArrayList<>();
+        if (MainActivity.lstContact == null) {
 
-        Cursor phones = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+            MainActivity.lstContact = new ArrayList<>();
 
-        while (phones.moveToNext())
-        {
-            String name=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            MainActivity.lstContact.add(new Contact(name,phoneNumber,false,counter));
-            counter++;
+            Cursor phones = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
+
+            while (phones.moveToNext())
+            {
+                String name=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+                MainActivity.lstContact.add(new Contact(name,phoneNumber,false,counter));
+                counter++;
+            }
+            phones.close();
+
+        } else{
+            Toast.makeText(getContext(), MainActivity.lstContact.get(0).getName(), Toast.LENGTH_SHORT).show();
         }
 
-        phones.close();
+
+
+
 
     }
 
