@@ -9,11 +9,36 @@ public class Contact {
     private String name;
     private String number;
     private int photo;
+    private boolean favorite;
+    private int originalPosition;
 
-
-    public Contact(String name, String number) {
+    public Contact(String name, String number, boolean favorite) {
         this.name = name;
         this.number = number;
+        this.favorite = favorite;
+    }
+
+    public Contact(String name, String number, boolean favorite, int originalPosition) {
+        this.name = name;
+        this.number = number;
+        this.favorite = favorite;
+        this.originalPosition = originalPosition;
+    }
+
+    public int getOriginalPosition() {
+        return originalPosition;
+    }
+
+    public void setOriginalPosition(int originalPosition) {
+        this.originalPosition = originalPosition;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
     }
 
     public String getName() {

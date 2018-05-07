@@ -17,12 +17,13 @@ import android.util.Log;
 import java.util.List;
 import java.util.Vector;
 
-public class MainActivity extends AppCompatActivity implements FragmentContact.sendMessage{
+public class MainActivity extends AppCompatActivity implements FragmentContact.sendMessage, FragmentFavorite.sendDataDeleted{
 
     private TabLayout tab;
     private ViewPager viewPager;
     private ViewPagerAdapter viewPagerAdapter;
-    public static List<Contact> lstContactFav;
+    //public static List<Contact> lstContactFav;
+    public  static List<Contact> lstContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,10 +74,17 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
 
 
     @Override
-    public void sendData(String name, String number) {
+    public void sendData(String name, String number, int option) {
         String tag = "android:switcher:" + R.id.viewPager_id + ":" + 2;
         FragmentFavorite f = (FragmentFavorite) getSupportFragmentManager().findFragmentByTag(tag);
-        f.displayReceivedData(name, number);
+        f.displayReceivedData(name, number, option);
+    }
+
+    @Override
+    public void sendDeleted(String name, String number, int option){
+        String tag = "android:switcher:" + R.id.viewPager_id + ":" + 1;
+        FragmentContact f = (FragmentContact) getSupportFragmentManager().findFragmentByTag(tag);
+        f.displayReceivedData(name, number, option);
     }
 
 }

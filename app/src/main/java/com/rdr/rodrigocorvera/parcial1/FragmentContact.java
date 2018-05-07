@@ -25,9 +25,9 @@ public class FragmentContact extends Fragment {
 
     View v;
     private RecyclerView rv;
-    private List<Contact> lstContact;
+    private int counter = 0;
     public static FragmentContact.sendMessage sm;
-
+    public static Context context;
     public FragmentContact () {
 
     }
@@ -35,9 +35,10 @@ public class FragmentContact extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        context = getContext();
         v = inflater.inflate(R.layout.contacts_fragment,container ,false);
         rv = v.findViewById(R.id.contact_recycleView);
-        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(), lstContact);
+        RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(), MainActivity.lstContact);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(recyclerViewAdapter);
 
@@ -45,19 +46,28 @@ public class FragmentContact extends Fragment {
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        /*if (MainActivity.lstContact  == null) {
+            MainActivity.lstContact = new ArrayList<>();
+        }*/
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        lstContact = new ArrayList<>();
+        MainActivity.lstContact = new ArrayList<>();
 
         Cursor phones = getContext().getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,null,null, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME + " ASC");
 
         while (phones.moveToNext())
         {
             String name=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-
             String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            lstContact.add(new Contact(name,phoneNumber));
+            MainActivity.lstContact.add(new Contact(name,phoneNumber,false,counter));
+            counter++;
         }
 
         phones.close();
@@ -65,7 +75,7 @@ public class FragmentContact extends Fragment {
     }
 
     interface sendMessage{
-        void sendData(String name,String number);
+        void sendData(String name,String number, int option);
     }
 
     @Override
@@ -77,7 +87,12 @@ public class FragmentContact extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException("Error in retrieving data. Please try again");
         }
+
+
     }
 
+    public void displayReceivedData (String name, String number, int i) {
+
+    }
 
 }

@@ -48,19 +48,42 @@
         android:gravity="center"
         >
 
-        <ImageView
+        <LinearLayout
             android:id="@+id/callAction"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_call_blue"
-            />
-        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_call_blue"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:id="@+id/favoriteAction"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginLeft="20dp"
-            android:src="@drawable/ic_favorite"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            >
+
+            <ImageView
+
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_favorite"
+
+                />
+
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

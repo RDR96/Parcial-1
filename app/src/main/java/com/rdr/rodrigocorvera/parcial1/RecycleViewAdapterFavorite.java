@@ -26,10 +26,10 @@ import java.util.List;
 class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapterFavorite.MyViewHolder>{
 
     Context context;
-    public static List<Contact> data;
+    //public static List<Contact> data;
     public RecyclerViewAdapterFavorite(Context context, List<Contact> data) {
         this.context = context;
-        this.data = data;
+        //this.data = data;
     }
 
     @Override
@@ -37,68 +37,63 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
 
         View v = LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false);
         final MyViewHolder vwHolder = new MyViewHolder(v);
-        final ImageView callingButton = v.findViewById(R.id.callAction);
-        final ImageView favoriteButton = v.findViewById(R.id.favoriteAction);
+        final LinearLayout callingButton = v.findViewById(R.id.callAction);
+        final LinearLayout favoriteButton = v.findViewById(R.id.favoriteAction);
 
-        vwHolder.item_contact.setOnClickListener(new View.OnClickListener(){
+
+        callingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + FragmentFavorite.favoriteData.get(vwHolder.getAdapterPosition()).getNumber()));
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
 
-                callingButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent = new Intent(Intent.ACTION_CALL);
-                        intent.setData(Uri.parse("tel:" + data.get(vwHolder.getAdapterPosition()).getNumber()));
-                        if (ContextCompat.checkSelfPermission(context,
-                                Manifest.permission.CALL_PHONE)
-                                != PackageManager.PERMISSION_GRANTED) {
-
-                        }else{
-                            context.startActivity(intent);
-                        }
-                    }
-                });
-
-                favoriteButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        //FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber());
-                        //favoriteButton.setImageResource(R.drawable.ic_favorite_red);
-                        FragmentFavorite.removeItem(vwHolder.getAdapterPosition(),context);
-                    }
-                });
-
+                }else{
+                    context.startActivity(intent);
+                }
             }
+        });
 
+        favoriteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber());
+                //favoriteButton.setImageResource(R.drawable.ic_favorite_red);
+
+                FragmentFavorite.removeItem(vwHolder.getAdapterPosition(),context);
+            }
         });
 
 
         return vwHolder;
     }
 
-    
+
 
 
     @Override
     public void onBindViewHolder(RecyclerViewAdapterFavorite.MyViewHolder holder, int position) {
-        holder.name.setText(data.get(position).getName());
-        holder.phoneNumber.setText(data.get(position).getNumber());
-        holder.favorite.setImageResource(R.drawable.ic_favorite_red);
+        holder.name.setText(FragmentFavorite.favoriteData.get(position).getName());
+        holder.phoneNumber.setText(FragmentFavorite.favoriteData.get(position).getNumber());
+        holder.favoriteIcon.setImageResource(R.drawable.ic_favorite_red);
         //holder.name.setText(data.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return data.size();
+        return FragmentFavorite.favoriteData.size();
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder implements View.OnLongClickListener, View.OnClickListener{
+    public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         public LinearLayout item_contact;
         public TextView name;
         public TextView phoneNumber;
         public ImageView image;
-        public ImageView favorite;
+        public LinearLayout favorite;
+        public ImageView favoriteIcon;
 
         public MyViewHolder (View itemView){
             super(itemView);
@@ -107,20 +102,11 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
             phoneNumber = itemView.findViewById(R.id.phoneContact);
             image = itemView.findViewById(R.id.contactImage);
             favorite = itemView.findViewById(R.id.favoriteAction);
+            favoriteIcon = (ImageView) favorite.getChildAt(0);
+
         }
 
-        @Override
-        public boolean onLongClick(View view) {
-            int position = getAdapterPosition();
-            Log.d("Valor: ", data.get(position).getName());
-            return true;
-        }
 
-        @Override
-        public void onClick(View view) {
-            int position = getAdapterPosition();
-            Log.d("Valor: ", "ENTRO!!!");
-        }
 
     }
 
