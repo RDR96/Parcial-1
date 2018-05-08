@@ -1,5 +1,7 @@
 package com.rdr.rodrigocorvera.parcial1;
 
+import android.graphics.Bitmap;
+
 /**
  * Created by Rodrigo Corvera on 2/5/2018.
  */
@@ -11,6 +13,7 @@ public class Contact {
     private int photo;
     private boolean favorite;
     private int originalPosition;
+    private Bitmap bitmap;
 
     public Contact(String name, String number, boolean favorite) {
         this.name = name;
@@ -18,11 +21,12 @@ public class Contact {
         this.favorite = favorite;
     }
 
-    public Contact(String name, String number, boolean favorite, int originalPosition) {
+    public Contact(String name, String number, boolean favorite, int originalPosition, Bitmap bitmap) {
         this.name = name;
         this.number = number;
         this.favorite = favorite;
         this.originalPosition = originalPosition;
+        this.bitmap = bitmap;
     }
 
     public int getOriginalPosition() {
@@ -31,6 +35,14 @@ public class Contact {
 
     public void setOriginalPosition(int originalPosition) {
         this.originalPosition = originalPosition;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
+    }
+
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
     public boolean isFavorite() {

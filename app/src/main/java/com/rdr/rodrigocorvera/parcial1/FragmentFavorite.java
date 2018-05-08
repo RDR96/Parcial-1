@@ -42,10 +42,13 @@ public class FragmentFavorite extends Fragment {
         rv = v.findViewById(R.id.fav_recycleView);
 
         if (favoriteData != null) {
+
             RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
             rv.setAdapter(recyclerViewAdapter);
+
         }
+
 
         MainActivity.filterTextBox.addTextChangedListener(new TextWatcher() {
 
@@ -61,25 +64,26 @@ public class FragmentFavorite extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                ArrayList<Contact> filterList = new ArrayList<>();
-                for (Contact item : favoriteData) {
-                    if (item.getName().toLowerCase().contains(editable.toString().toLowerCase())) {
-                        filterList.add(item);
-                    }
-                }
-                RecyclerViewAdapterFavorite rc;
+               if (favoriteData != null) {
+                   ArrayList<Contact> filterList = new ArrayList<>();
+                   for (Contact item : favoriteData) {
+                       if (item.getName().toLowerCase().contains(editable.toString().toLowerCase())) {
+                           filterList.add(item);
+                       }
+                   }
+                   RecyclerViewAdapterFavorite rc;
 
+                   if ( filterList.size() == 0) {
+                       rc = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
+                   } else {
+                       rc = new RecyclerViewAdapterFavorite(getContext(), filterList);
+                   }
 
-                if ( filterList.size() == 0) {
-                    rc = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
-                } else {
-                    rc = new RecyclerViewAdapterFavorite(getContext(), filterList);
-                }
-
-                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
-                rc.notifyDataSetChanged();
-                rv.setAdapter(rc);
-            }
+                   rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                   rc.notifyDataSetChanged();
+                   rv.setAdapter(rc);
+               }
+               }
         });
 
 
@@ -93,12 +97,15 @@ public class FragmentFavorite extends Fragment {
     }
     protected void displayReceivedData(String name,String number, int option)
     {
+
         favoriteData = new ArrayList<Contact>();
+
         for (Contact Element : MainActivity.lstContact) {
             if (Element.isFavorite()) {
-            favoriteData.add(new Contact(Element.getName(),Element.getNumber(),true, Element.getOriginalPosition()));
+            favoriteData.add(new Contact(Element.getName(),Element.getNumber(),true, Element.getOriginalPosition(), Element.getBitmap()));
             }
         }
+
         Log.d("El tamaño es: " , String.valueOf(favoriteData.size()));
         RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));

@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.media.Image;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
@@ -25,6 +26,8 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,9 +59,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Bitmap bitmap = data.get(vwHolder.getAdapterPosition()).getBitmap();
+                ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+
+                bitmap.compress(Bitmap.CompressFormat.PNG, 10, bStream);
+                byte[] byteArray = bStream.toByteArray();
+
+
                 Intent newIntent = new Intent(context.getApplicationContext(), contactInfoActivity.class);
                 newIntent.setAction(Intent.ACTION_SEND);
                 newIntent.setType("text/plain");
+                newIntent.putExtra("image", byteArray);
                 newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
                 + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition());
                 context.startActivity(newIntent);
@@ -104,13 +116,24 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-
-
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(data.get(position).getName());
         holder.phoneNumber.setText(data.get(position).getNumber());
-        //holder.name.setText(data.get(position).getName());
+        holder.image.setImageBitmap(data.get(position).getBitmap());
+
+        /*holder.favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (data.get(position).isFavorite()) {
+                    holder.favorite.setImageResource(R.drawable.ic_favorite_red);
+                } else {
+                    holder.favorite.setImageResource(R.drawable.ic_favorite);
+                }
+            }
+        });*/
+
     }
 
     @Override
@@ -124,6 +147,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView name;
         private TextView phoneNumber;
         private ImageView image;
+        private ImageView favorite;
 
         public MyViewHolder (View itemView){
             super(itemView);
@@ -131,6 +155,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             name = itemView.findViewById(R.id.nameContact);
             phoneNumber = itemView.findViewById(R.id.phoneContact);
             image = itemView.findViewById(R.id.contactImage);
+            favorite = itemView.findViewById(R.id.favoriteAction);
         }
 
 

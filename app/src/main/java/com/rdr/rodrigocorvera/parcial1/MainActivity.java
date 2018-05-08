@@ -9,10 +9,12 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
+import android.support.v4.view.ViewPager.OnPageChangeListener;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 
 import java.util.List;
@@ -26,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
     //public static List<Contact> lstContactFav;
     public  static List<Contact> lstContact;
     public static EditText filterTextBox;
+    public static Button addContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
         }
 
         filterTextBox = findViewById(R.id.filterBoxText);
+        addContact = findViewById(R.id.addButton);
 
         tab = findViewById(R.id.tabLayout_id);
         viewPager = findViewById(R.id.viewPager_id);
@@ -56,6 +60,7 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
         viewPagerAdapter.AddFragment(new FragmentContact(), "");
         viewPagerAdapter.AddFragment(new FragmentFavorite(), "");
         viewPager.setAdapter(viewPagerAdapter);
+
         tab.setupWithViewPager(viewPager);
 
 
@@ -67,13 +72,15 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
 
     }
 
-
     @Override
     public void sendData(String name, String number, int option) {
         String tag = "android:switcher:" + R.id.viewPager_id + ":" + 1;
         FragmentFavorite f = (FragmentFavorite) getSupportFragmentManager().findFragmentByTag(tag);
         f.displayReceivedData(name, number, option);
     }
+
+
+
 
     @Override
     public void sendDeleted(String name, String number, int option){

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context="com.rdr.rodrigocorvera.parcial1.MainActivity">
 
     <android.support.design.widget.TabLayout
@@ -25,6 +27,14 @@
         android:layout_height="wrap_content"
         android:textSize="20dp"
         android:textColor="@color/backgroundFragment"
+        />
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add"
+        android:background="#424242"
+        android:textColor="#E0E0E0"
         />
 
     <android.support.v4.view.ViewPager

@@ -1,6 +1,7 @@
 package com.rdr.rodrigocorvera.parcial1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.support.v4.app.Fragment;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.rdr.rodrigocorvera.parcial1.MainActivity.addContact;
 import static com.rdr.rodrigocorvera.parcial1.MainActivity.filterTextBox;
 
 /**
@@ -30,10 +32,11 @@ public class FragmentContact extends Fragment {
 
     View v;
     private RecyclerView rv;
-    private int counter = 0;
+    public static int counter = 0;
     public static FragmentContact.sendMessage sm;
     public static Context context;
     public EditText filterTextBox;
+
     public FragmentContact () {
 
     }
@@ -47,6 +50,22 @@ public class FragmentContact extends Fragment {
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(), MainActivity.lstContact);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(recyclerViewAdapter);
+
+        MainActivity.filterTextBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                MainActivity.filterTextBox.setFocusableInTouchMode(true);
+            }
+        });
+
+        MainActivity.addContact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(context.getApplicationContext(), addContactActivity.class);
+                context.startActivity(newIntent);
+            }
+        });
+
 
         MainActivity.filterTextBox.addTextChangedListener(new TextWatcher() {
 
@@ -109,10 +128,14 @@ public class FragmentContact extends Fragment {
             {
                 String name=phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                 String phoneNumber = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                MainActivity.lstContact.add(new Contact(name,phoneNumber,false,counter));
+                MainActivity.lstContact.add(new Contact(name,phoneNumber,false,counter, null));
                 counter++;
             }
             phones.close();
+
+            if (counter == 0) {
+                Toast.makeText(getContext(), "No hay contactos", Toast.LENGTH_SHORT).show();
+            }
 
         } else{
             Toast.makeText(getContext(), MainActivity.lstContact.get(0).getName(), Toast.LENGTH_SHORT).show();

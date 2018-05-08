@@ -2,6 +2,8 @@ package com.rdr.rodrigocorvera.parcial1;
 
 import android.app.ActionBar;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
@@ -21,18 +23,20 @@ public class contactInfoActivity extends AppCompatActivity {
     ImageView editButton;
     int originalPosition;
     ImageView shareButton;
-
+    ImageView imageReview;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info_main);
+
         Intent callingIntent = getIntent();
         final String intentAction = callingIntent.getAction();
         String intentType = callingIntent.getType();
+
         name = findViewById(R.id.nameText);
         number = findViewById(R.id.numberText);
         editButton = findViewById(R.id.editButton);
+        imageReview = findViewById(R.id.imageReview);
         name.clearFocus();
         number.clearFocus();
         shareButton = findViewById(R.id.shareIntent);
@@ -105,10 +109,14 @@ public class contactInfoActivity extends AppCompatActivity {
     }
 
     public void handleReceivedText (Intent intent) {
+        Bitmap bmp;
+        byte[] byteArray = intent.getByteArrayExtra("image");
+        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
         String values [] = intent.getStringExtra(Intent.EXTRA_TEXT).split("'");
         name.setText(values[0]);
         number.setText(values[1]);
         originalPosition = Integer.parseInt(values[2]);
+        imageReview.setImageBitmap(bmp);
     }
 
     public String getAllValues () {
