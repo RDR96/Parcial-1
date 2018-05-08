@@ -32,6 +32,8 @@ public class contactInfoActivity extends AppCompatActivity {
     ImageView imageReview;
     ImageView callButton;
     ImageView deleteElement;
+    int decision;
+    int favoritePosition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,31 +64,46 @@ public class contactInfoActivity extends AppCompatActivity {
         deleteElement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (MainActivity.lstContact.get(originalPosition).isFavorite()) {
-                   for (Contact Element : FragmentFavorite.favoriteData) {
-                        if (Element.getOriginalPosition() == MainActivity.lstContact.get(originalPosition).getOriginalPosition()) {
-                            FragmentFavorite.favoriteData.remove(Element.getFavoritePosition());
+                if (decision == 0) {
+                    if (MainActivity.lstContact.get(originalPosition).isFavorite()) {
+                        for (Contact Element : FragmentFavorite.favoriteData) {
+                            if (Element.getOriginalPosition() == MainActivity.lstContact.get(originalPosition).getOriginalPosition()) {
+                                FragmentFavorite.favoriteData.remove(Element.getFavoritePosition());
+                            }
                         }
-                   }
+                    }
+
+                    Toast.makeText(getApplicationContext(),name.getText().toString() + " eliminado",Toast.LENGTH_SHORT).show();
+                    MainActivity.lstContact.remove(originalPosition);
+
+                    int counter = 0;
+
+                    for ( Contact Element : MainActivity.lstContact) {
+                        Element.setOriginalPosition(counter);
+                        counter++;
+                    }
+
+                    Intent backTo = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(backTo);
+                } else {
+
+                    MainActivity.lstContact.remove(originalPosition);
+                    FragmentFavorite.favoriteData.remove(favoritePosition);
+
+                    int counter = 0;
+
+                    for ( Contact Element : FragmentFavorite.favoriteData) {
+                        Element.setOriginalPosition(counter);
+                        counter++;
+                    }
+
+                    Intent backTo = new Intent(getApplicationContext(), MainActivity.class);
+                    startActivity(backTo);
                 }
 
-
-
-
-                Toast.makeText(getApplicationContext(),name.getText().toString() + " eliminado",Toast.LENGTH_SHORT).show();
-                MainActivity.lstContact.remove(originalPosition);
-
-                int counter = 0;
-
-                for ( Contact Element : MainActivity.lstContact) {
-                    Element.setOriginalPosition(counter);
-                    counter++;
-                }
-
-                Intent backTo = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(backTo);
             }
+
+
         });
 
         callButton.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +114,6 @@ public class contactInfoActivity extends AppCompatActivity {
                 if (ContextCompat.checkSelfPermission(context,
                         Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED) {
-
                 }else{
                     context.startActivity(intent);
                 }
@@ -137,6 +153,7 @@ public class contactInfoActivity extends AppCompatActivity {
             }
         });
 
+
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -147,6 +164,11 @@ public class contactInfoActivity extends AppCompatActivity {
                     //name.setFocusable(false); number.setFocusable(false);
                     name.setEnabled(false); number.setEnabled(false);
                     MainActivity.lstContact.get(originalPosition).setName(name.getText().toString());
+                    MainActivity.lstContact.get(originalPosition).setNumber(number.getText().toString());
+                    if (FragmentFavorite.favoriteData.size() != 0) {
+                        FragmentFavorite.favoriteData.get(MainActivity.lstContact.get(originalPosition).getFavoritePosition()).setName(name.getText().toString());
+                        FragmentFavorite.favoriteData.get(MainActivity.lstContact.get(originalPosition).getFavoritePosition()).setNumber(number.getText().toString());
+                    }
                     Toast.makeText(getApplicationContext(),"Nombre: " + MainActivity.lstContact.get(0).getName(),Toast.LENGTH_SHORT).show();
                     Toast.makeText(getApplicationContext(),"Nombre: " + MainActivity.lstContact.get(originalPosition).getName(),Toast.LENGTH_SHORT).show();
                     MainActivity.lstContact.get(originalPosition).setNumber(number.getText().toString());
@@ -170,17 +192,14 @@ public class contactInfoActivity extends AppCompatActivity {
 
     public void handleReceivedText (Intent intent) {
         Bitmap bmp;
-
         byte[] byteArray = intent.getByteArrayExtra("image");
 
-        if (byteArray != null) {
-            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            imageReview.setImageBitmap(bmp);
-        }
         String values [] = intent.getStringExtra(Intent.EXTRA_TEXT).split("'");
         name.setText(values[0]);
         number.setText(values[1]);
         originalPosition = Integer.parseInt(values[2]);
+        decision = Integer.parseInt(values[3]);
+        favoritePosition = Integer.parseInt(values[4]);
 
     }
 

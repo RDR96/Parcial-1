@@ -15,6 +15,8 @@ public class Contact {
     private int originalPosition;
     private Bitmap bitmap;
     private int favoritePosition;
+    private boolean filter = false;
+    private int filterPosition;
 
     public Contact(String name, String number, boolean favorite) {
         this.name = name;
@@ -28,6 +30,14 @@ public class Contact {
         this.favorite = favorite;
         this.originalPosition = originalPosition;
         this.bitmap = bitmap;
+    }
+
+    public int getFilterPosition() {
+        return filterPosition;
+    }
+
+    public void setFilterPosition(int filterPosition) {
+        this.filterPosition = filterPosition;
     }
 
     public Contact(String name, String number, boolean favorite, int originalPosition, Bitmap bitmap, int favoritePosition) {
@@ -45,6 +55,14 @@ public class Contact {
 
     public void setFavoritePosition(int favoritePosition) {
         this.favoritePosition = favoritePosition;
+    }
+
+    public boolean isFilter() {
+        return filter;
+    }
+
+    public void setFilter(boolean filter) {
+        this.filter = filter;
     }
 
     public int getOriginalPosition() {

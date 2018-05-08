@@ -60,22 +60,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
 
-
-
                 Intent newIntent = new Intent(context.getApplicationContext(), contactInfoActivity.class);
                 newIntent.setAction(Intent.ACTION_SEND);
                 newIntent.setType("text/plain");
 
                 if (data.get(vwHolder.getAdapterPosition()).getBitmap() != null) {
-                    Bitmap bitmap = data.get(vwHolder.getAdapterPosition()).getBitmap();
-                    ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-                    bitmap.compress(Bitmap.CompressFormat.PNG, 1, bStream);
-                    byte[] byteArray = bStream.toByteArray();
-                    newIntent.putExtra("image", byteArray);
+                    int position = vwHolder.getAdapterPosition();
+                    newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
+                            + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition() + "'" + 0 + "'" + data.get(vwHolder.getAdapterPosition()).getFavoritePosition() + "'" + position);
+                } else {
+                    newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
+                            + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition() + "'" + 0 + "'" + data.get(vwHolder.getAdapterPosition()).getFavoritePosition() + "'" + 5000);
                 }
-
-                newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
-                + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition());
                 context.startActivity(newIntent);
             }
         });

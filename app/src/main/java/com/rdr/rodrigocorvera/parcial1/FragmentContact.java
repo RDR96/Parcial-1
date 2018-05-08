@@ -82,9 +82,16 @@ public class FragmentContact extends Fragment {
             @Override
             public void afterTextChanged(Editable editable) {
                 ArrayList<Contact> filterList = new ArrayList<>();
+                int valueCounter = 0;
                 for (Contact item : MainActivity.lstContact) {
+
                     if (item.getName().toLowerCase().contains(editable.toString().toLowerCase())) {
                         filterList.add(item);
+                        item.setFilterPosition(valueCounter);
+                        valueCounter++;
+                        item.setFilter(true);
+                    } else {
+                        item.setFilter(false);
                     }
                 }
                 RecyclerViewAdapter rc;

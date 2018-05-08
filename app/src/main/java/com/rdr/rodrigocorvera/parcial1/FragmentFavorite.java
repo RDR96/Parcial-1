@@ -112,8 +112,16 @@ public class FragmentFavorite extends Fragment {
      }
 
     public static void removeItem (int position, Context context) {
+
         MainActivity.lstContact.get(favoriteData.get(position).getOriginalPosition()).setFavorite(false);
-        favoriteData.remove(position);
+        favoriteData.remove(favoriteData.get(position).getFavoritePosition());
+
+        int counter = 0;
+
+        for ( Contact Element : FragmentFavorite.favoriteData) {
+            Element.setFavoritePosition(counter);
+            counter++;
+        }
 
         //RecyclerViewAdapterFavorite recyclerViewAdapter2 = new RecyclerViewAdapterFavorite(FragmentContact.context, favoriteData);
 

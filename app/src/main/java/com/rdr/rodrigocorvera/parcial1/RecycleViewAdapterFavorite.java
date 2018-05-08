@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 /**
@@ -40,6 +42,33 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
         final MyViewHolder vwHolder = new MyViewHolder(v);
         final LinearLayout callingButton = v.findViewById(R.id.callAction);
         final ImageView favoriteButton = v.findViewById(R.id.favoriteAction);
+        final LinearLayout container = v.findViewById(R.id.element);
+
+
+        container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(context.getApplicationContext(), contactInfoActivity.class);
+                newIntent.setAction(Intent.ACTION_SEND);
+                newIntent.setType("text/plain");
+
+                if (data.get(vwHolder.getAdapterPosition()).getBitmap() != null) {
+                    Bitmap bitmap = data.get(vwHolder.getAdapterPosition()).getBitmap();
+                    ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 1, bStream);
+                    byte[] byteArray = bStream.toByteArray();
+                    newIntent.putExtra("image", byteArray);
+                }else {
+                    newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
+                            + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition() + "'" + 1 + "'" + data.get(vwHolder.getAdapterPosition()).getFavoritePosition());
+                }
+
+
+                context.startActivity(newIntent);
+            }
+        });
+
+
 
 
         callingButton.setOnClickListener(new View.OnClickListener() {
