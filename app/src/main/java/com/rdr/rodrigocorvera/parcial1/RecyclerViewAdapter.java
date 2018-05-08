@@ -60,17 +60,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
 
-                Bitmap bitmap = data.get(vwHolder.getAdapterPosition()).getBitmap();
-                ByteArrayOutputStream bStream = new ByteArrayOutputStream();
-
-                bitmap.compress(Bitmap.CompressFormat.PNG, 10, bStream);
-                byte[] byteArray = bStream.toByteArray();
 
 
                 Intent newIntent = new Intent(context.getApplicationContext(), contactInfoActivity.class);
                 newIntent.setAction(Intent.ACTION_SEND);
                 newIntent.setType("text/plain");
-                newIntent.putExtra("image", byteArray);
+
+                if (data.get(vwHolder.getAdapterPosition()).getBitmap() != null) {
+                    Bitmap bitmap = data.get(vwHolder.getAdapterPosition()).getBitmap();
+                    ByteArrayOutputStream bStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 1, bStream);
+                    byte[] byteArray = bStream.toByteArray();
+                    newIntent.putExtra("image", byteArray);
+                }
+
                 newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
                 + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition());
                 context.startActivity(newIntent);

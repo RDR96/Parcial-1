@@ -1,16 +1,22 @@
 package com.rdr.rodrigocorvera.parcial1;
 
+import android.Manifest;
 import android.app.ActionBar;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import static com.rdr.rodrigocorvera.parcial1.FragmentContact.context;
 
 /**
  * Created by Rodrigo Corvera on 6/5/2018.
@@ -24,6 +30,9 @@ public class contactInfoActivity extends AppCompatActivity {
     int originalPosition;
     ImageView shareButton;
     ImageView imageReview;
+    ImageView callButton;
+    ImageView deleteElement;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,9 +49,41 @@ public class contactInfoActivity extends AppCompatActivity {
         name.clearFocus();
         number.clearFocus();
         shareButton = findViewById(R.id.shareIntent);
+        callButton = findViewById(R.id.callIntent);
+        deleteElement = findViewById(R.id.deleteIntent);
+
+
+
 
         android.support.v7.app.ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
+
+
+        deleteElement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(),name.getText().toString() + " eliminado",Toast.LENGTH_SHORT).show();
+                MainActivity.lstContact.remove(originalPosition);
+                Intent backTo = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(backTo);
+            }
+        });
+
+        callButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + number.getText().toString()));
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                }else{
+                    context.startActivity(intent);
+                }
+            }
+        });
+
 
 
         shareButton.setOnClickListener(new View.OnClickListener() {
@@ -110,13 +151,18 @@ public class contactInfoActivity extends AppCompatActivity {
 
     public void handleReceivedText (Intent intent) {
         Bitmap bmp;
+
         byte[] byteArray = intent.getByteArrayExtra("image");
-        bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+
+        if (byteArray != null) {
+            bmp = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            imageReview.setImageBitmap(bmp);
+        }
         String values [] = intent.getStringExtra(Intent.EXTRA_TEXT).split("'");
         name.setText(values[0]);
         number.setText(values[1]);
         originalPosition = Integer.parseInt(values[2]);
-        imageReview.setImageBitmap(bmp);
+
     }
 
     public String getAllValues () {

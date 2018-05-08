@@ -46,10 +46,7 @@ public class FragmentFavorite extends Fragment {
             RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
             rv.setAdapter(recyclerViewAdapter);
-
         }
-
-
         MainActivity.filterTextBox.addTextChangedListener(new TextWatcher() {
 
             @Override

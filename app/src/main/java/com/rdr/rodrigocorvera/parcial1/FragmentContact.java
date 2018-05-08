@@ -137,8 +137,6 @@ public class FragmentContact extends Fragment {
                 Toast.makeText(getContext(), "No hay contactos", Toast.LENGTH_SHORT).show();
             }
 
-        } else{
-            Toast.makeText(getContext(), MainActivity.lstContact.get(0).getName(), Toast.LENGTH_SHORT).show();
         }
 
 
