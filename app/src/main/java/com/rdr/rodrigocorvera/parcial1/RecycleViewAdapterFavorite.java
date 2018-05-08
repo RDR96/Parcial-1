@@ -26,9 +26,10 @@ import java.util.List;
 class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapterFavorite.MyViewHolder>{
 
     Context context;
-    //public static List<Contact> data;
+    public static List<Contact> data;
     public RecyclerViewAdapterFavorite(Context context, List<Contact> data) {
         this.context = context;
+        this.data = data;
         //this.data = data;
     }
 
@@ -38,14 +39,14 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
         View v = LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false);
         final MyViewHolder vwHolder = new MyViewHolder(v);
         final LinearLayout callingButton = v.findViewById(R.id.callAction);
-        final LinearLayout favoriteButton = v.findViewById(R.id.favoriteAction);
+        final ImageView favoriteButton = v.findViewById(R.id.favoriteAction);
 
 
         callingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + FragmentFavorite.favoriteData.get(vwHolder.getAdapterPosition()).getNumber()));
+                intent.setData(Uri.parse("tel:" + data.get(vwHolder.getAdapterPosition()).getNumber()));
                 if (ContextCompat.checkSelfPermission(context,
                         Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -74,15 +75,15 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
 
     @Override
     public void onBindViewHolder(RecyclerViewAdapterFavorite.MyViewHolder holder, int position) {
-        holder.name.setText(FragmentFavorite.favoriteData.get(position).getName());
-        holder.phoneNumber.setText(FragmentFavorite.favoriteData.get(position).getNumber());
-        holder.favoriteIcon.setImageResource(R.drawable.ic_favorite_red);
+        holder.name.setText(data.get(position).getName());
+        holder.phoneNumber.setText(data.get(position).getNumber());
+        holder.favorite.setImageResource(R.drawable.ic_favorite_red);
         //holder.name.setText(data.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return FragmentFavorite.favoriteData.size();
+        return data.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -91,8 +92,8 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
         public TextView name;
         public TextView phoneNumber;
         public ImageView image;
-        public LinearLayout favorite;
-        public ImageView favoriteIcon;
+        public ImageView favorite;
+
 
         public MyViewHolder (View itemView){
             super(itemView);
@@ -101,7 +102,6 @@ class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerViewAdapt
             phoneNumber = itemView.findViewById(R.id.phoneContact);
             image = itemView.findViewById(R.id.contactImage);
             favorite = itemView.findViewById(R.id.favoriteAction);
-            favoriteIcon = (ImageView) favorite.getChildAt(0);
 
         }
 

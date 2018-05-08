@@ -8,14 +8,19 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.rdr.rodrigocorvera.parcial1.MainActivity.filterTextBox;
 
 /**
  * Created by Rodrigo Corvera on 2/5/2018.
@@ -28,6 +33,7 @@ public class FragmentContact extends Fragment {
     private int counter = 0;
     public static FragmentContact.sendMessage sm;
     public static Context context;
+    public EditText filterTextBox;
     public FragmentContact () {
 
     }
@@ -41,6 +47,41 @@ public class FragmentContact extends Fragment {
         RecyclerViewAdapter recyclerViewAdapter = new RecyclerViewAdapter(getContext(), MainActivity.lstContact);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(recyclerViewAdapter);
+
+        MainActivity.filterTextBox.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                ArrayList<Contact> filterList = new ArrayList<>();
+                for (Contact item : MainActivity.lstContact) {
+                    if (item.getName().toLowerCase().contains(editable.toString().toLowerCase())) {
+                        filterList.add(item);
+                    }
+                }
+                RecyclerViewAdapter rc;
+
+                if ( filterList.size() == 0) {
+                    rc = new RecyclerViewAdapter(context, MainActivity.lstContact);
+                } else {
+                    rc = new RecyclerViewAdapter(context, filterList);
+                }
+
+                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                rc.notifyDataSetChanged();
+                rv.setAdapter(rc);
+            }
+        });
+
 
         return rv;
     }

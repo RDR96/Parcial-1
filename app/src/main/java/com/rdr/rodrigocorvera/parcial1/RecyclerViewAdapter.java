@@ -10,7 +10,9 @@ import android.media.Image;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
 import android.text.Layout;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +25,11 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static com.rdr.rodrigocorvera.parcial1.MainActivity.filterTextBox;
+import static java.security.AccessController.getContext;
 
 /**
  * Created by Rodrigo Corvera on 2/5/2018.
@@ -31,10 +37,11 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
 
-    Context context;
-    
+    public Context context;
+    public List<Contact> data;
     public RecyclerViewAdapter(Context context, List<Contact> data) {
         this.context = context;
+        this.data = data;
         //Log.d("data", data.get(0).getNumber());
     }
 
@@ -43,18 +50,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        View v = LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false);
        final MyViewHolder vwHolder = new MyViewHolder(v);
         final LinearLayout callingButton = v.findViewById(R.id.callAction);
-        final LinearLayout favoriteButton = v.findViewById(R.id.favoriteAction);
+        final ImageView favoriteButton = v.findViewById(R.id.favoriteAction);
         final LinearLayout container = v.findViewById(R.id.element);
 
         container.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context,"Nombre: " + MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getName(),Toast.LENGTH_SHORT).show();
                 Intent newIntent = new Intent(context.getApplicationContext(), contactInfoActivity.class);
                 newIntent.setAction(Intent.ACTION_SEND);
                 newIntent.setType("text/plain");
-                newIntent.putExtra(Intent.EXTRA_TEXT, MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getName()
-                + "'" + MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getNumber() + "'" + MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getOriginalPosition());
+                newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
+                + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition());
                 context.startActivity(newIntent);
             }
         });
@@ -62,8 +68,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         callingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getNumber()));
+                intent.setData(Uri.parse("tel:" + data.get(vwHolder.getAdapterPosition()).getNumber()));
                 if (ContextCompat.checkSelfPermission(context,
                         Manifest.permission.CALL_PHONE)
                         != PackageManager.PERMISSION_GRANTED) {
@@ -80,42 +87,18 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
 
-                if (!MainActivity.lstContact.get(vwHolder.getAdapterPosition()).isFavorite()) {
-                    MainActivity.lstContact.get(vwHolder.getAdapterPosition()).setFavorite(true);
-                    FragmentContact.sm.sendData(MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getName(),MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getNumber(),0);
-                    ImageView imae = (ImageView) favoriteButton.getChildAt(0);
-                    imae.setImageResource(R.drawable.ic_favorite_red);
-
+                if (!data.get(vwHolder.getAdapterPosition()).isFavorite()) {
+                    data.get(vwHolder.getAdapterPosition()).setFavorite(true);
+                    FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber(),0);
+                    favoriteButton.setImageResource(R.drawable.ic_favorite_red);
+                    Log.d("Tamaño", "prueba");
                 } else {
-                    MainActivity.lstContact.get(vwHolder.getAdapterPosition()).setFavorite(false);
-                    FragmentContact.sm.sendData(MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getName(),MainActivity.lstContact.get(vwHolder.getAdapterPosition()).getNumber(),1);
-                    ImageView imae = (ImageView) favoriteButton.getChildAt(0);
-                    imae.setImageResource(R.drawable.ic_favorite);
+                    data.get(vwHolder.getAdapterPosition()).setFavorite(false);
+                    FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber(),1);
+                    favoriteButton.setImageResource(R.drawable.ic_favorite);
                 }
-
-
-
-                //favoriteButton.setImageResource(R.drawable.ic_favorite_red);
             }
         });
-
-       /* vwHolder.item_contact.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-            }
-
-        });*/
-
-       /* vwHolder.item_contact.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber());
-                return true;
-            }
-
-        });*/
-
-
 
         return vwHolder;
     }
@@ -125,15 +108,14 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        holder.name.setText(MainActivity.lstContact.get(position).getName());
-        holder.phoneNumber.setText(MainActivity.lstContact.get(position).getNumber());
-
+        holder.name.setText(data.get(position).getName());
+        holder.phoneNumber.setText(data.get(position).getNumber());
         //holder.name.setText(data.get(position).getName());
     }
 
     @Override
     public int getItemCount() {
-        return MainActivity.lstContact.size();
+        return data.size();
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
@@ -142,7 +124,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         private TextView name;
         private TextView phoneNumber;
         private ImageView image;
-
 
         public MyViewHolder (View itemView){
             super(itemView);

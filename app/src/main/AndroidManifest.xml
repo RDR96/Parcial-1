@@ -3,6 +3,7 @@
     package="com.rdr.rodrigocorvera.parcial1">
 
     <uses-permission-sdk-23 android:name="android.permission.READ_CONTACTS" />
+
     <uses-permission-sdk-23 android:name="android.permission.CALL_PHONE" />
 
     <application

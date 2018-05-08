@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -44,6 +46,44 @@ public class FragmentFavorite extends Fragment {
             rv.setLayoutManager(new LinearLayoutManager(getActivity()));
             rv.setAdapter(recyclerViewAdapter);
         }
+
+        MainActivity.filterTextBox.addTextChangedListener(new TextWatcher() {
+
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                ArrayList<Contact> filterList = new ArrayList<>();
+                for (Contact item : favoriteData) {
+                    if (item.getName().toLowerCase().contains(editable.toString().toLowerCase())) {
+                        filterList.add(item);
+                    }
+                }
+                RecyclerViewAdapterFavorite rc;
+
+
+                if ( filterList.size() == 0) {
+                    rc = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
+                } else {
+                    rc = new RecyclerViewAdapterFavorite(getContext(), filterList);
+                }
+
+                rv.setLayoutManager(new LinearLayoutManager(getActivity()));
+                rc.notifyDataSetChanged();
+                rv.setAdapter(rc);
+            }
+        });
+
+
+
         return v;
     }
 
