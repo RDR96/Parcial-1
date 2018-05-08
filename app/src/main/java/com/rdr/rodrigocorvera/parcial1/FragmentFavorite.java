@@ -96,10 +96,11 @@ public class FragmentFavorite extends Fragment {
     {
 
         favoriteData = new ArrayList<Contact>();
-
+        int counter = 0;
         for (Contact Element : MainActivity.lstContact) {
             if (Element.isFavorite()) {
-            favoriteData.add(new Contact(Element.getName(),Element.getNumber(),true, Element.getOriginalPosition(), Element.getBitmap()));
+            favoriteData.add(new Contact(Element.getName(),Element.getNumber(),true, Element.getOriginalPosition(), Element.getBitmap(),counter));
+            counter++;
             }
         }
 

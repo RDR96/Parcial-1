@@ -62,8 +62,28 @@ public class contactInfoActivity extends AppCompatActivity {
         deleteElement.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                if (MainActivity.lstContact.get(originalPosition).isFavorite()) {
+                   for (Contact Element : FragmentFavorite.favoriteData) {
+                        if (Element.getOriginalPosition() == MainActivity.lstContact.get(originalPosition).getOriginalPosition()) {
+                            FragmentFavorite.favoriteData.remove(Element.getFavoritePosition());
+                        }
+                   }
+                }
+
+
+
+
                 Toast.makeText(getApplicationContext(),name.getText().toString() + " eliminado",Toast.LENGTH_SHORT).show();
                 MainActivity.lstContact.remove(originalPosition);
+
+                int counter = 0;
+
+                for ( Contact Element : MainActivity.lstContact) {
+                    Element.setOriginalPosition(counter);
+                    counter++;
+                }
+
                 Intent backTo = new Intent(getApplicationContext(), MainActivity.class);
                 startActivity(backTo);
             }
@@ -137,7 +157,6 @@ public class contactInfoActivity extends AppCompatActivity {
         if (Intent.ACTION_SEND.equals(intentAction) && intentType != null){
             if (intentType.equals("text/plain")){
                 handleReceivedText(callingIntent);
-
             }
         }
 

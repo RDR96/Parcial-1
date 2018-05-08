@@ -14,6 +14,7 @@ public class Contact {
     private boolean favorite;
     private int originalPosition;
     private Bitmap bitmap;
+    private int favoritePosition;
 
     public Contact(String name, String number, boolean favorite) {
         this.name = name;
@@ -27,6 +28,23 @@ public class Contact {
         this.favorite = favorite;
         this.originalPosition = originalPosition;
         this.bitmap = bitmap;
+    }
+
+    public Contact(String name, String number, boolean favorite, int originalPosition, Bitmap bitmap, int favoritePosition) {
+        this.name = name;
+        this.number = number;
+        this.favorite = favorite;
+        this.originalPosition = originalPosition;
+        this.bitmap = bitmap;
+        this.favoritePosition = favoritePosition;
+    }
+
+    public int getFavoritePosition() {
+        return favoritePosition;
+    }
+
+    public void setFavoritePosition(int favoritePosition) {
+        this.favoritePosition = favoritePosition;
     }
 
     public int getOriginalPosition() {
