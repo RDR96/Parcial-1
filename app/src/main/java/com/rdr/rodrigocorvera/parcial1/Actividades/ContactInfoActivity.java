@@ -291,12 +291,15 @@ public class ContactInfoActivity extends AppCompatActivity {
                                 MainActivity.lstContact.get(originalPosition).setName(nameTextbox);
                                 name.setText(nameTextbox);
                             } else if (nameTextbox.equals("") && !numberTextbox.equals("")) {
+
                                 auxNumbers.add(numberTextbox);
                                 if (!alternativeNumber.equals("")) {
                                     auxNumbers.add(alternativeNumber);
-                                    MainActivity.lstContact.get(originalPosition).setNumbers(auxNumbers);
+                                } else if (MainActivity.lstContact.get(originalPosition).getNumbers().size() > 1) {
+                                    auxNumbers.add(MainActivity.lstContact.get(originalPosition).getNumbers().get(1));
                                 }
 
+                                MainActivity.lstContact.get(originalPosition).setNumbers(auxNumbers);
                             } else if (nameTextbox.equals("") && numberTextbox.equals("") && !alternativeNumber.equals("")) {
                                 auxNumbers.add(MainActivity.lstContact.get(originalPosition).getNumbers().get(0));
                                 auxNumbers.add(alternativeNumber);
@@ -309,8 +312,8 @@ public class ContactInfoActivity extends AppCompatActivity {
                                 MainActivity.lstContact.get(originalPosition).setNumbers(auxNumbers);
                                 if (!alternativeNumber.equals("")) {
                                     auxNumbers.add(alternativeNumber);
-                                    MainActivity.lstContact.get(originalPosition).setNumbers(auxNumbers);
                                 }
+                                MainActivity.lstContact.get(originalPosition).setNumbers(auxNumbers);
                                 name.setText(nameTextbox);
                             }
 

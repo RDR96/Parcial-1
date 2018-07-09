@@ -195,7 +195,6 @@ public class FragmentContact extends Fragment {
 
     //Ordena la lista de contactos
     public static void sortElements() {
-
         Collections.sort(MainActivity.lstContact, Contact.StuNameComparator);
         int counter = 0;
         for (Contact contactObject : MainActivity.lstContact) {

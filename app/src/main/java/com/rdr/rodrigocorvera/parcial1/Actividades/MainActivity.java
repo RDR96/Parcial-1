@@ -49,6 +49,9 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        //Se determina si se tienen los permisos para que la aplicación funcione correctamente, en este caso pedir
+        //contactos
         application = getApplication();
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (prefs.getBoolean("locked", false)) {
@@ -57,12 +60,7 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
             isGranted = prefs.getBoolean("locked", false);
         }
 
-        /*if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(MainActivity.this,
-                    new String[]{Manifest.permission.READ_CONTACTS},2);
-
-        }*/
-
+        //Pide permisos para realizar llamadas
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.CALL_PHONE)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -71,18 +69,35 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
                     new String[]{Manifest.permission.CALL_PHONE},1);
         }
 
+        //Solicita permisos para leer los contactos
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},2);
         }
+        getViews();
+        setConfiguration();
 
 
+
+
+    }
+
+    //***Obtengo los elementos de la vista para que puedan ser manipulados en el código***
+    public void getViews(){
         getContactsButton = findViewById(R.id.button_get_all_contacts);
         isContactFragment = true;
         filterTextBox = findViewById(R.id.filterBoxText);
         addContact = findViewById(R.id.addButton);
         tab = findViewById(R.id.tabLayout_id);
         viewPager = findViewById(R.id.viewPager_id);
+    }
+
+    //*** Se configuran aspectos necesarios para el funcionamiento de la pantalla, listeners, intents, etc.
+    public void setConfiguration(){
         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        viewPagerAdapter.AddFragment(new FragmentContact(), "");
+        viewPagerAdapter.AddFragment(new FragmentFavorite(), "");
+        viewPager.setAdapter(viewPagerAdapter);
+
 
         if (isGranted) {
             getContactsButton.setVisibility(View.GONE);
@@ -99,9 +114,7 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
 
 
         // adding Fragments
-        viewPagerAdapter.AddFragment(new FragmentContact(), "");
-        viewPagerAdapter.AddFragment(new FragmentFavorite(), "");
-        viewPager.setAdapter(viewPagerAdapter);
+
 
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -214,6 +227,7 @@ public class MainActivity extends AppCompatActivity implements FragmentContact.s
             filterTextBox.setText("");
         } else{
             super.onBackPressed();
+            finish();
         }
 
     }

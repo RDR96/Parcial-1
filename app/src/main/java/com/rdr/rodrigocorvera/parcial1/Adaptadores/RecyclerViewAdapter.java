@@ -110,6 +110,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
+
+
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(data.get(position).getName());

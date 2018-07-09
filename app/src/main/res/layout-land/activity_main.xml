@@ -37,7 +37,7 @@
         android:layout_width="match_parent"
         android:layout_height="34dp"
         android:background="#424242"
-        android:text="@string/add"
+        android:text="@string/add_contact"
         android:textColor="#E0E0E0" />
     <RelativeLayout
         android:layout_width="wrap_content"

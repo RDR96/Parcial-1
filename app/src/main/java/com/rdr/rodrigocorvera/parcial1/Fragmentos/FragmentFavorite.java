@@ -121,6 +121,7 @@ public class FragmentFavorite extends Fragment {
     {
         favoriteData = new ArrayList<Contact>();
         int counter = 0;
+
         for (Contact element : MainActivity.lstContact) {
             if (element.isFavorite()) {
             favoriteData.add(new Contact(element.getName(),element.getNumbers().get(0),true, element.getOriginalPosition(), element.getBitmap(),counter));
@@ -129,6 +130,7 @@ public class FragmentFavorite extends Fragment {
             counter++;
             }
         }
+
         RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(getContext(), favoriteData);
         rv.setLayoutManager(new LinearLayoutManager(getActivity()));
         rv.setAdapter(recyclerViewAdapter);
@@ -177,9 +179,21 @@ public class FragmentFavorite extends Fragment {
         rv.setAdapter(recyclerViewAdapter);*/
 
         if (favoriteData != null) {
+            favoriteData = new ArrayList<Contact>();
+            int counter = 0;
+            for (Contact element : MainActivity.lstContact) {
+                if (element.isFavorite()) {
+                    favoriteData.add(new Contact(element.getName(),element.getNumbers().get(0),true, element.getOriginalPosition(), element.getBitmap(),counter));
+                    MainActivity.lstContact.get(element.getOriginalPosition()).setFavoritePosition(counter);
+                    Log.d("Posicion y texto", String.valueOf(favoriteData.get(counter).getFavoritePosition()) + " " +favoriteData.get(counter).getName().toString());
+                    counter++;
+                }
+            }
+
             RecyclerViewAdapterFavorite recyclerViewAdapter = new RecyclerViewAdapterFavorite(context, favoriteData);
             rv.setLayoutManager(new LinearLayoutManager(context.getApplicationContext()));
             rv.setAdapter(recyclerViewAdapter);
+
         }
     }
 

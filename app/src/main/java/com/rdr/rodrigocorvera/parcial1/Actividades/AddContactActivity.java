@@ -33,7 +33,8 @@ public class AddContactActivity extends AppCompatActivity{
     int originalPosition;
     ImageView imageButton;
     ImageView imageSection;
-    Bitmap bitmap;
+    static Bitmap bitmap;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +90,7 @@ public class AddContactActivity extends AppCompatActivity{
                 } else {
                     Toast.makeText(getApplicationContext(),R.string.add_successful, Toast.LENGTH_SHORT).show();
                     MainActivity.lstContact.add(new Contact(name.getText().toString(), number.getText().toString(),false, MainActivity.lstContact.size(), bitmap));
+                    bitmap = null;
                     Intent intent = new Intent(getApplicationContext(),MainActivity.class);
                     startActivity(intent);
                     finish();
@@ -99,6 +101,7 @@ public class AddContactActivity extends AppCompatActivity{
 
 
     }
+
 
     public static final int PICK_IMAGE = 1;
 

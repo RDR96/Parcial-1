@@ -33,6 +33,10 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
 
     Context context;
     public static List<Contact> data;
+    MyViewHolder vwHolder;
+    LinearLayout callingButton;
+    ImageView favoriteButton;
+    LinearLayout container;
     public RecyclerViewAdapterFavorite(Context context, List<Contact> data) {
         this.context = context;
         this.data = data;
@@ -43,11 +47,28 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false);
-        final MyViewHolder vwHolder = new MyViewHolder(v);
-        final LinearLayout callingButton = v.findViewById(R.id.callAction);
-        final ImageView favoriteButton = v.findViewById(R.id.favoriteAction);
-        final LinearLayout container = v.findViewById(R.id.element);
 
+        getViews(v);
+        setConfiguration();
+
+
+
+
+
+
+        return vwHolder;
+    }
+
+    //Se obtienen los elementos de la vista para luego manipurarlos.
+    public void getViews(View v){
+        vwHolder = new MyViewHolder(v);
+        callingButton = v.findViewById(R.id.callAction);
+        favoriteButton = v.findViewById(R.id.favoriteAction);
+        container = v.findViewById(R.id.element);
+    }
+
+    //Se configuran aspectos básicos para la funcionalidad de la actividad, listeners, etc.
+    public void setConfiguration(){
 
         container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,14 +116,11 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
 
             }
         });
-
-
-        return vwHolder;
     }
 
 
 
-
+    //Se encarga de obtener cada elemento de la lista y colocarlos en el recycler view. Se llama continuamente.
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.name.setText(data.get(position).getName());
@@ -116,6 +134,7 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
         //holder.name.setText(data.get(position).getName());
     }
 
+    //Obtiene el tamaño de la lista de datos para saber cuantos elementos se van a mostrar en el recycler view
     @Override
     public int getItemCount() {
         return data.size();

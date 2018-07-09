@@ -31,13 +31,15 @@
         android:textColor="@color/backgroundFragment"
         android:drawablePadding="8dp"
         android:drawableStart="@drawable/ic_search_black_24dp"
-
+        android:maxLines="1"
+        android:lines="1"
+        android:singleLine="true"
         android:drawableLeft="@drawable/ic_search_black_24dp" />
     <Button
         android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/add"
+        android:text="@string/add_contact"
         android:background="#424242"
         android:textColor="#E0E0E0"
         />

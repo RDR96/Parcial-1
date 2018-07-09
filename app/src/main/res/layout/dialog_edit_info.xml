@@ -105,10 +105,15 @@
 
         <EditText
             android:id="@+id/editable_textbox_name"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="@color/white"
+            android:maxLines="1"
+            android:lines="1"
+            android:maxLength="15"
+            android:singleLine="true"
             android:textColorHint="@color/greyPrimary"
             android:hint="@string/update_contact_name"
             />
@@ -118,7 +123,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:digits="0123456789"
             android:textColor="@color/white"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:maxLength="8"
             android:textColorHint="@color/greyPrimary"
             android:hint="@string/update_contact_number"
             />
@@ -127,7 +137,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:digits="0123456789"
             android:textColor="@color/white"
+            android:maxLines="1"
+            android:lines="1"
+            android:singleLine="true"
+            android:maxLength="8"
             android:textColorHint="@color/greyPrimary"
             android:hint="@string/update_alternative_contact_number"
             />
