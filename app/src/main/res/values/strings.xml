@@ -1,8 +1,30 @@
 <resources>
-    <string name="app_name">Parcial1</string>
+    <string name="app_name">Contacts app</string>
     <string name="name">Nombre</string>
     <string name="number">Numero</string>
     <string name="title_activity_main2">Main2Activity</string>
     <string name="add">Añadir</string>
+    <string name="insert_data">Inserte datos</string>
+    <string name="want_to_delete">¿Desea eliminar el contacto?</string>
+    <string name="update">Actualizar</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Sí</string>
+    <string name="no">No</string>
+    <string name="edit_contact">Edita el contacto</string>
+    <string name="current_info">Información actual</string>
+    <string name="add_successful">Añadido contacto</string>
     <string name="addActivity">Añade contacto</string>
+    <string name="update_contact_name">Actualizar nombre</string>
+    <string name="update_contact_number">Actualizar número</string>
+    <string name="successful_update_info">Información actualizada</string>
+    <string name="fill_some_field">Rellene algún campo</string>
+    <string name="search_contact">Busca un contacto</string>
+    <string name="no_matches_contacts">No existe contacto</string>
+    <string name="get_all_contacts">Obtener contactos</string>
+    <string name="call_function">Llamar contacto</string>
+    <string name="delete_function">Eliminar contacto</string>
+    <string name="share_function">Compartir contacto</string>
+    <string name="add_another_number">Añade otro número</string>
+    <string name="alternative_number">Número alternativo</string>
+    <string name="update_alternative_contact_number">Actualice número alternativo</string>
 </resources>

@@ -10,55 +10,53 @@
     tools:context="com.rdr.rodrigocorvera.parcial1.Actividades.MainActivity">
 
     <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout_id"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="34dp"
         android:background="@color/colorPrimary"
-        app:tabMode="fixed"
-        app:tabMaxWidth="0dp"
         app:tabGravity="fill"
         app:tabIndicatorColor="@color/colorAccent"
-        android:id="@+id/tabLayout_id"
-        >
-    </android.support.design.widget.TabLayout>
+        app:tabMaxWidth="0dp"
+        app:tabMode="fixed"></android.support.design.widget.TabLayout>
 
 
     <EditText
         android:id="@+id/filterBoxText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="20dp"
-        android:hint="@string/search_contact"
-        android:textColor="@color/backgroundFragment"
         android:drawablePadding="8dp"
         android:drawableStart="@drawable/ic_search_black_24dp"
+        android:hint="@string/search_contact"
+        android:textColor="@color/backgroundFragment"
+        android:textSize="20dp"
 
         android:drawableLeft="@drawable/ic_search_black_24dp" />
+
     <Button
         android:id="@+id/addButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add"
+        android:layout_height="34dp"
         android:background="#424242"
-        android:textColor="#E0E0E0"
-        />
+        android:text="@string/add"
+        android:textColor="#E0E0E0" />
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         >
-
         <Button
             android:id="@+id/button_get_all_contacts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="visible"
+            android:visibility="gone"
             android:text="@string/get_all_contacts"
             />
         <android.support.v4.view.ViewPager
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/viewPager_id"
+
             ></android.support.v4.view.ViewPager>
 
     </RelativeLayout>

@@ -1,6 +1,10 @@
-package com.rdr.rodrigocorvera.parcial1;
+package com.rdr.rodrigocorvera.parcial1.Clases;
 
+import android.content.Context;
 import android.graphics.Bitmap;
+
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * Created by Rodrigo Corvera on 2/5/2018.
@@ -10,6 +14,7 @@ public class Contact {
 
     private String name;
     private String number;
+    private ArrayList<String> numbers;
     private int photo;
     private boolean favorite;
     private int originalPosition;
@@ -26,10 +31,35 @@ public class Contact {
 
     public Contact(String name, String number, boolean favorite, int originalPosition, Bitmap bitmap) {
         this.name = name;
-        this.number = number;
+        numbers = new ArrayList<>();
+        numbers.add(number);
         this.favorite = favorite;
         this.originalPosition = originalPosition;
         this.bitmap = bitmap;
+    }
+
+    public ArrayList<String> getNumbers() {
+        return numbers;
+    }
+
+    public void setNumbers(ArrayList<String> numbers) {
+        this.numbers = numbers;
+    }
+
+    public void setNumberById(int position, String number){
+        if (position == 0){
+            numbers.add(0,number);
+        } else {
+            numbers.add(1,number);
+        }
+    }
+
+    public static Comparator<Contact> getStuNameComparator() {
+        return StuNameComparator;
+    }
+
+    public static void setStuNameComparator(Comparator<Contact> stuNameComparator) {
+        StuNameComparator = stuNameComparator;
     }
 
     public int getFilterPosition() {
@@ -42,7 +72,8 @@ public class Contact {
 
     public Contact(String name, String number, boolean favorite, int originalPosition, Bitmap bitmap, int favoritePosition) {
         this.name = name;
-        this.number = number;
+        numbers = new ArrayList<>();
+        numbers.add(number);
         this.favorite = favorite;
         this.originalPosition = originalPosition;
         this.bitmap = bitmap;
@@ -112,4 +143,18 @@ public class Contact {
     public void setPhoto(int photo) {
         this.photo = photo;
     }
+
+    public static Comparator<Contact> StuNameComparator = new Comparator<Contact>() {
+
+        public int compare(Contact s1, Contact s2) {
+            String StudentName1 = s1.getName().toUpperCase();
+            String StudentName2 = s2.getName().toUpperCase();
+
+            //ascending order
+            return StudentName1.compareTo(StudentName2);
+
+            //descending order
+            //return StudentName2.compareTo(StudentName1);
+        }};
+
 }

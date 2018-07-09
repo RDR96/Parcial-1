@@ -1,38 +1,30 @@
-package com.rdr.rodrigocorvera.parcial1;
+package com.rdr.rodrigocorvera.parcial1.Adaptadores;
 
 import android.Manifest;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.media.Image;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.Layout;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.rdr.rodrigocorvera.parcial1.Actividades.ContactInfoActivity;
+import com.rdr.rodrigocorvera.parcial1.Clases.Contact;
+import com.rdr.rodrigocorvera.parcial1.Fragmentos.FragmentContact;
+import com.rdr.rodrigocorvera.parcial1.R;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
-
-import static com.rdr.rodrigocorvera.parcial1.MainActivity.filterTextBox;
-import static java.security.AccessController.getContext;
 
 /**
  * Created by Rodrigo Corvera on 2/5/2018.
@@ -48,6 +40,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         //Log.d("data", data.get(0).getNumber());
     }
 
+
+
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
        View v = LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false);
@@ -60,7 +54,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             @Override
             public void onClick(View view) {
 
-                Intent newIntent = new Intent(context.getApplicationContext(), contactInfoActivity.class);
+                Intent newIntent = new Intent(context.getApplicationContext(), ContactInfoActivity.class);
                 newIntent.setAction(Intent.ACTION_SEND);
                 newIntent.setType("text/plain");
 
@@ -73,6 +67,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
                             + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition() + "'" + 0 + "'" + data.get(vwHolder.getAdapterPosition()).getFavoritePosition() + "'" + 5000);
                 }
                 context.startActivity(newIntent);
+                ((Activity)context).finish();
             }
         });
 
@@ -100,12 +95,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
                 if (!data.get(vwHolder.getAdapterPosition()).isFavorite()) {
                     data.get(vwHolder.getAdapterPosition()).setFavorite(true);
-                    FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber(),0);
+                    FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumbers().get(0),0);
                     favoriteButton.setImageResource(R.drawable.ic_favorite_red);
                     Log.d("Tamaño", "prueba");
                 } else {
                     data.get(vwHolder.getAdapterPosition()).setFavorite(false);
-                    FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumber(),1);
+                    FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumbers().get(0),1);
                     favoriteButton.setImageResource(R.drawable.ic_favorite);
                 }
             }
@@ -118,8 +113,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(final MyViewHolder holder, final int position) {
         holder.name.setText(data.get(position).getName());
-        holder.phoneNumber.setText(data.get(position).getNumber());
-        holder.image.setImageBitmap(data.get(position).getBitmap());
+        holder.phoneNumber.setText(data.get(position).getNumbers().get(0));
+
+        if (data.get(position).getBitmap() != null) {
+            holder.image.setImageBitmap(bitmapRotation(data.get(position).getBitmap()));
+        }
+
+        if (data.get(position).isFavorite()) {
+            holder.favorite.setImageResource(R.drawable.ic_favorite_red);
+        }else {
+            holder.favorite.setImageResource(R.drawable.ic_favorite);
+        }
 
         /*holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,5 +162,21 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         }
 
 
+    }
+
+    //Función que gira un bitmap dado.
+    public Bitmap bitmapRotation (Bitmap imageBitmap) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(90f);
+
+        Bitmap scaledBitmap = Bitmap.createScaledBitmap(imageBitmap, imageBitmap.getWidth(), imageBitmap.getHeight(), true);
+
+        Bitmap rotatedBitmap = Bitmap.createBitmap(scaledBitmap, 0, 0, scaledBitmap.getWidth(), scaledBitmap.getHeight(), matrix, true);
+
+        /*ImageView imageElement = imageView;
+        imageElement.setScaleType(ImageView.ScaleType.MATRIX);   //required
+        matrix.postRotate(90f, imageElement.getDrawable().getBounds().width()/2, imageElement.getDrawable().getBounds().height()/2);
+        imageView.setImageMatrix(matrix);*/
+        return rotatedBitmap;
     }
 }

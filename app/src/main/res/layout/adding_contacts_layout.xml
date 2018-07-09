@@ -17,7 +17,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:background="@drawable/ic_launcher_background"
-            android:src="@drawable/ic_launcher_foreground"
+            android:src="@drawable/ic_account_circle_black_24dp"
             >
         </ImageView>
 
@@ -51,7 +51,7 @@
         <EditText
             android:id="@+id/nameText"
             android:maxLength="15"
-            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ "
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="30sp"
@@ -87,13 +87,17 @@
             android:gravity="center"
             >
 
-            <ImageView
+            <TextView
                 android:id="@+id/addButton"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:src="@drawable/ic_add_circle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textColor="@color/white"
+                android:drawableLeft="@drawable/ic_add_circle"
+                android:text="@string/add"
+                android:background="@drawable/radius_border"
+                android:padding="8sp"
                 />
-
         </LinearLayout>
 
 

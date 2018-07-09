@@ -1,4 +1,4 @@
-package com.rdr.rodrigocorvera.parcial1;
+package com.rdr.rodrigocorvera.parcial1.Adaptadores;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

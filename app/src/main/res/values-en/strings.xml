@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Contacts app</string>
+    <string name="name">Name</string>
+    <string name="number">Number</string>
+    <string name="title_activity_main2">Main2Activity</string>
+    <string name="add">Add</string>
+    <string name="insert_data">Inser data</string>
+    <string name="want_to_delete">Do you want to delete it</string>
+    <string name="update">Update</string>
+    <string name="cancel">Cancel</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="edit_contact">Edit contact</string>
+    <string name="current_info">Current info</string>
+    <string name="add_successful">Successfully added</string>
+    <string name="addActivity">Add contact</string>
+    <string name="update_contact_name">Update name</string>
+    <string name="update_contact_number">Update number</string>
+    <string name="successful_update_info">Info updated</string>
+    <string name="fill_some_field">Fill some field</string>
+    <string name="search_contact">Search a contact</string>
+    <string name="no_matches_contacts">Contact doesn\'t exist</string>
+    <string name="get_all_contacts">Get contacts</string>
+    <string name="call_function">Call contact</string>
+    <string name="delete_function">Delete contact</string>
+    <string name="share_function">Share contact</string>
+    <string name="add_another_number">Add another number</string>
+    <string name="alternative_number">Alternative number</string>
+    <string name="update_alternative_contact_number">Update alternative number</string>
+
+</resources>

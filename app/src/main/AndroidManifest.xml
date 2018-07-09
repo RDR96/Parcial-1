@@ -2,9 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.rdr.rodrigocorvera.parcial1">
 
-    <uses-permission-sdk-23 android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
-    <uses-permission-sdk-23 android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -13,20 +13,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Actividades.MainActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize|smallestScreenSize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".contactInfoActivity" />
+        <activity android:name=".Actividades.ContactInfoActivity" />
         <activity
-            android:name=".Main2Activity"
+            android:name=".Actividades.Main2Activity"
             android:label="@string/title_activity_main2"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity
-            android:name=".addContactActivity"
+            android:name=".Actividades.AddContactActivity"
             android:label="@string/addActivity"
             />
     </application>
