@@ -47,28 +47,13 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View v = LayoutInflater.from(context).inflate(R.layout.item_contact, parent, false);
-
-        getViews(v);
-        setConfiguration();
-
-
-
-
-
-
-        return vwHolder;
-    }
-
-    //Se obtienen los elementos de la vista para luego manipurarlos.
-    public void getViews(View v){
         vwHolder = new MyViewHolder(v);
         callingButton = v.findViewById(R.id.callAction);
         favoriteButton = v.findViewById(R.id.favoriteAction);
         container = v.findViewById(R.id.element);
-    }
 
-    //Se configuran aspectos básicos para la funcionalidad de la actividad, listeners, etc.
-    public void setConfiguration(){
+        //getViews(v);
+        //setConfiguration();
 
         container.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,9 +74,6 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
             }
         });
 
-
-
-
         callingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -107,22 +89,26 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
             }
         });
 
-        favoriteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumbers().get(0),1);
-                //favoriteButton.setImageResource(R.drawable.ic_favorite_red);
-                FragmentFavorite.removeItem(vwHolder.getAdapterPosition(),context);
 
-            }
-        });
+
+        return vwHolder;
+    }
+
+    //Se obtienen los elementos de la vista para luego manipurarlos.
+    public void getViews(View v){
+
+    }
+
+    //Se configuran aspectos básicos para la funcionalidad de la actividad, listeners, etc.
+    public void setConfiguration(){
+
     }
 
 
 
     //Se encarga de obtener cada elemento de la lista y colocarlos en el recycler view. Se llama continuamente.
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         holder.name.setText(data.get(position).getName());
         holder.phoneNumber.setText(data.get(position).getNumbers().get(0));
 
@@ -131,6 +117,15 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
         }
 
         holder.favorite.setImageResource(R.drawable.ic_favorite_red);
+
+        holder.favorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //FragmentContact.sm.sendData(data.get(vwHolder.getAdapterPosition()).getName(),data.get(vwHolder.getAdapterPosition()).getNumbers().get(0),1);
+                //favoriteButton.setImageResource(R.drawable.ic_favorite_red);
+                FragmentFavorite.removeItem(position,context);
+            }
+        });
         //holder.name.setText(data.get(position).getName());
     }
 
