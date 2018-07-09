@@ -149,7 +149,7 @@ public class FragmentFavorite extends Fragment {
         for (Contact element : MainActivity.lstContact) {
             if (element.isFavorite()) {
                 MainActivity.lstContact.get(element.getOriginalPosition()).setFavoritePosition(counter);
-                Log.d("Posicion y texto", String.valueOf(favoriteData.get(counter).getFavoritePosition()) + " " +favoriteData.get(counter).getName().toString());
+                //Log.d("Posicion y texto", String.valueOf(favoriteData.get(counter).getFavoritePosition()) + " " +favoriteData.get(counter).getName().toString());
                 counter++;
             }
         }

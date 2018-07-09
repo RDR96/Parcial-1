@@ -55,40 +55,6 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
         //getViews(v);
         //setConfiguration();
 
-        container.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newIntent = new Intent(context.getApplicationContext(), ContactInfoActivity.class);
-                newIntent.setAction(Intent.ACTION_SEND);
-                newIntent.setType("text/plain");
-
-                if (data.get(vwHolder.getAdapterPosition()).getBitmap() != null) {
-                    newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
-                            + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition() + "'" + 1 + "'" + data.get(vwHolder.getAdapterPosition()).getFavoritePosition());
-                }else {
-                    newIntent.putExtra(Intent.EXTRA_TEXT, data.get(vwHolder.getAdapterPosition()).getName()
-                            + "'" + data.get(vwHolder.getAdapterPosition()).getNumber() + "'" + data.get(vwHolder.getAdapterPosition()).getOriginalPosition() + "'" + 1 + "'" + data.get(vwHolder.getAdapterPosition()).getFavoritePosition());
-                }
-
-                context.startActivity(newIntent);
-            }
-        });
-
-        callingButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + data.get(vwHolder.getAdapterPosition()).getNumber()));
-                if (ContextCompat.checkSelfPermission(context,
-                        Manifest.permission.CALL_PHONE)
-                        != PackageManager.PERMISSION_GRANTED) {
-
-                }else{
-                    context.startActivity(intent);
-                }
-            }
-        });
-
 
 
         return vwHolder;
@@ -118,6 +84,41 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
 
         holder.favorite.setImageResource(R.drawable.ic_favorite_red);
 
+        holder.item_contact.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newIntent = new Intent(context.getApplicationContext(), ContactInfoActivity.class);
+                newIntent.setAction(Intent.ACTION_SEND);
+                newIntent.setType("text/plain");
+
+                if (data.get(vwHolder.getAdapterPosition()).getBitmap() != null) {
+                    newIntent.putExtra(Intent.EXTRA_TEXT, data.get(position).getName()
+                            + "'" + data.get(position).getNumber() + "'" + data.get(position).getOriginalPosition() + "'" + 1 + "'" + data.get(position).getFavoritePosition());
+                }else {
+                    newIntent.putExtra(Intent.EXTRA_TEXT, data.get(position).getName()
+                            + "'" + data.get(position).getNumber() + "'" + data.get(position).getOriginalPosition() + "'" + 1 + "'" + data.get(position).getFavoritePosition());
+                }
+
+                context.startActivity(newIntent);
+            }
+        });
+
+        holder.call_function.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + data.get(position).getNumbers().get(0)));
+                if (ContextCompat.checkSelfPermission(context,
+                        Manifest.permission.CALL_PHONE)
+                        != PackageManager.PERMISSION_GRANTED) {
+
+                }else{
+                    context.startActivity(intent);
+                }
+            }
+        });
+
+
         holder.favorite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,6 +139,7 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
     public static class MyViewHolder extends RecyclerView.ViewHolder{
 
         public LinearLayout item_contact;
+        public LinearLayout call_function;
         public TextView name;
         public TextView phoneNumber;
         public ImageView image;
@@ -151,6 +153,7 @@ public class RecyclerViewAdapterFavorite extends RecyclerView.Adapter<RecyclerVi
             phoneNumber = itemView.findViewById(R.id.phoneContact);
             image = itemView.findViewById(R.id.contactImage);
             favorite = itemView.findViewById(R.id.favoriteAction);
+            call_function = itemView.findViewById(R.id.callAction);
 
         }
 

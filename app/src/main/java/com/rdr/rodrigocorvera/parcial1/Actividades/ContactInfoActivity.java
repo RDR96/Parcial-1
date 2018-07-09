@@ -285,9 +285,8 @@ public class ContactInfoActivity extends AppCompatActivity {
 
                                 if (!alternativeNumber.equals("")) {
                                     auxNumbers.add(alternativeNumber);
-                                    MainActivity.lstContact.get(originalPosition).setNumbers(auxNumbers);
                                 }
-
+                                MainActivity.lstContact.get(originalPosition).setNumbers(auxNumbers);
                                 MainActivity.lstContact.get(originalPosition).setName(nameTextbox);
                                 name.setText(nameTextbox);
                             } else if (nameTextbox.equals("") && !numberTextbox.equals("")) {
